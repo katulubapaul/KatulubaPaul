@@ -1,11 +1,25 @@
 #include <stdio.h>// preprocessor directive
 #include <stdlib.h>
+//variable to stores user name
+char name[25];
 
- // This the structures of the menu
+// function declaration
+int ViewOrder();
+int ShowMenu();
+int PlaceOrder();
+int calculateTotal();
+
+ // This is the structures of the menu
  struct foods{
     int item_code;
     char name[50];
-    int price;
+    double price;
+};
+
+//This is the structure of the order.
+struct Order{
+    int code;
+    double quantity;
 };
 
 //struct array of items on the menu
@@ -20,31 +34,104 @@ struct foods food[] =
     {007, "Fish", 20},
 };
 
+//struct array to store orders placed by customer.
+struct Order orders[3];
+
 //Function for showing the menu to the user
 int ShowMenu(){
-    int i; 
-    for( i = 0; i < 7; i++){
-        printf("ITEM_CODE: %d  NAME: %s PRICE: $%d \n", food[i].item_code, food[i].name, food[i].price);
-       
 
+    //index for the struct array.
+    int i; 
+    int max = sizeof(food) / sizeof(food[0]);
+    //The title of the menu to be printed out.
+    printf("*** O U R M E N U. ***\n");
+    printf("\n");
+
+    //loop through the struct array.
+    for( i = 0; i < max; i++){
+
+       //print out the iterations.
+        printf("CODE: %d  ITEM: %s PRICE: $%.2lf \n", food[i].item_code, food[i].name, food[i].price);
     }
 }
 
+//Place order function
+int PlaceOrder(){
+
+    //the function to display a menu to the user is called.
+    ShowMenu();
+    printf("\n");
+
+    //this prompt the user to enter the item code for order placing.
+    // "int i" is the maximum number of orders a user can make.
+    for(int i = 0; i < 3; i++){
+
+    //Prompt user to take the item code
+    printf("Enter the item code to continue:\n");
+    scanf("%d", &orders[i].code);
+    
+    //Prompt user to take the quantity of the item.
+    printf("Quantity:\n");
+    scanf("%lf", &orders[i].quantity);
+    }
+
+    ViewOrder();
+}
+//ViewOrder function for viewing products a user have chosen.
+int ViewOrder(){  
+
+    //title of the receipt for user.
+    printf("*****YOUR RECEIPT*****\n");
+    printf("NAME: %s\n", name);
+    printf("PAYMENT METHOD: credit card\n");
+    printf("\n");
+    // "int i" is the maximum number of orders a user can make.
+    for(int i = 0; i < 3; i++){
+
+        /*Since the product codes starts from 001, this 
+        item_index variable make there indexing easy.*/
+        int item_index = orders[i].code - 1;
+        printf("%.1lf %s  @  $%.2lf \n", orders[i].quantity, food[item_index].name, food[item_index].price*orders[i].quantity);
+
+        }
+        printf("\n");
+        calculateTotal(orders);
+}
+
+//calculateTotal() helps to calculate and print out the overall total.
+int calculateTotal(struct Order orders[]){
+    double tax;//variable to store the tax.
+    double sum = 0;//initial sum of the prices.
+    double Grand_total;//variable to store Grand total.
+
+    for(int i = 0; i < 3; i++){
+        int item_index = orders[i].code - 1;
+        sum += food[item_index].price*orders[i].quantity;
+    }
+
+    tax = sum * 7/100;//tax
+    Grand_total = sum + tax;//Grand total
+
+    //All totals printed out after the calculations.
+    printf("Subtotal: $%.2lf\n", sum);
+    printf("Tax: 7%% ($%.2lf)\n", tax);
+    printf("Grand total: $%.2lf\n", Grand_total);
+    printf("\n");
+    printf("Your order is on the way...\n");
+    printf("***Thank you for ordering with us!***");
+}
 
 int main(){//Main function
 
     //variable to store user choice
     int choice;
 
-    //variable to stores user name
-    char name[25];
-
     //Prompt user to make inputs.
     printf("Enter your name:\n");
     scanf("%s", &name);
 
     // Welcome message to a user
-    printf("%s! Welcome to KICKNACKS\n", name);
+    printf(" %s! Welcome to KICKNACKS\n ", name);
 
     //list of choices for the user to continue.
     printf("Enter a number to make choice and continue: \n");
@@ -53,13 +140,32 @@ int main(){//Main function
     printf("3. View Order\n");
     printf("4. Exit\n");
     scanf("%d", &choice);
+    printf("\n");
 
     //switch to test the user input and carries out the logic
     switch(choice){
+        //switch case 1 shows the menu to the user
         case 1:
         ShowMenu();
         break;
 
+        //switch case 2 help the user to place an order.
+        case 2:
+        PlaceOrder();
+        break;
+
+        //switch case 3 helps the user to view the current order.
+        case 3:
+        ViewOrder();
+        break;
+
+        //switch case 4 helps the user to exit the system.
+        case 4:
+        printf("Thank you for ordering with us!\n");
+        printf("Exiting...");
+        break;
+
+        //This displays when a wrong choice is made
         default:
         printf("Please enter the valid choice!");
     }
