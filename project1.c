@@ -43,6 +43,7 @@ int ShowMenu(){
     //index for the struct array.
     int i; 
     int max = sizeof(food) / sizeof(food[0]);
+    
     //The title of the menu to be printed out.
     printf("*** O U R M E N U. ***\n");
     printf("\n");
