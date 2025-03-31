@@ -1,5 +1,15 @@
+/* RESTUARANT FOOD ORDERING SYSTEM IN C.
+ Customer can:
+ - Place order.
+ - View the menu.
+ - View the receipt after placing order.
+ - Calculate the grand total, sub total, tax.
+ - Decide how many items to order (Maximum is 3).
+*/
+
 #include <stdio.h>// preprocessor directive
 #include <stdlib.h>
+
 //variable to stores user name
 char name[25];
 
@@ -62,14 +72,21 @@ int PlaceOrder(){
     //the function to display a menu to the user is called.
     ShowMenu();
     printf("\n");
+    printf("Enter 0 when you reach the number of items you want...\n");
 
-    //this prompt the user to enter the item code for order placing.
-    // "int i" is the maximum number of orders a user can make.
+    //prompt the user to enter the item code for order placing.
+    //"int i" is the maximum number of orders a user can make.
     for(int i = 0; i < 3; i++){
 
     //Prompt user to take the item code
     printf("Enter the item code to continue:\n");
     scanf("%d", &orders[i].code);
+
+    /* User can decide to take one item and this gives him/her
+    a right by entering 0 */
+    if(orders[i].code == 0){
+        break;
+    }
     
     //Prompt user to take the quantity of the item.
     printf("Quantity:\n");
@@ -78,14 +95,19 @@ int PlaceOrder(){
 
     ViewOrder();
 }
+
 //ViewOrder function for viewing products a user have chosen.
 int ViewOrder(){  
-
+    
     //title of the receipt for user.
     printf("*****YOUR RECEIPT*****\n");
+
+    //Customer details
     printf("NAME: %s\n", name);
     printf("PAYMENT METHOD: credit card\n");
     printf("\n");
+
+    //Loop through the items stored in the struct orders array.
     // "int i" is the maximum number of orders a user can make.
     for(int i = 0; i < 3; i++){
 
@@ -101,17 +123,17 @@ int ViewOrder(){
 
 //calculateTotal() helps to calculate and print out the overall total.
 int calculateTotal(struct Order orders[]){
-    double tax;//variable to store the tax.
-    double sum = 0;//initial sum of the prices.
-    double Grand_total;//variable to store Grand total.
+    double tax; //variable to store the tax.
+    double sum = 0; //initial sum of the prices.
+    double Grand_total; //variable to store Grand total.
 
     for(int i = 0; i < 3; i++){
         int item_index = orders[i].code - 1;
         sum += food[item_index].price*orders[i].quantity;
     }
 
-    tax = sum * 7/100;//tax
-    Grand_total = sum + tax;//Grand total
+    tax = sum * 7/100; //tax
+    Grand_total = sum + tax; //Grand total
 
     //All totals printed out after the calculations.
     printf("Subtotal: $%.2lf\n", sum);
@@ -122,14 +144,14 @@ int calculateTotal(struct Order orders[]){
     printf("***Thank you for ordering with us!***");
 }
 
-int main(){//Main function
+int main(){ //Main function
 
     //variable to store user choice
     int choice;
 
     //Prompt user to make inputs.
     printf("Enter your name:\n");
-    scanf("%s", &name);
+    fgets(name, 25, stdin);
 
     // Welcome message to a user
     printf(" %s! Welcome to KICKNACKS\n ", name);
@@ -145,6 +167,7 @@ int main(){//Main function
 
     //switch to test the user input and carries out the logic
     switch(choice){
+
         //switch case 1 shows the menu to the user
         case 1:
         ShowMenu();
