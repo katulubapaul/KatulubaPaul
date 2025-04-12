@@ -1,35 +1,19 @@
-// CAROL AND PAULS WEDDING
-#include <stdio.h> // preprocessor directive
-// printf and scanf
 
-int main(){ // main function
-    /*
-    int %d or %i
-    float %f
-    char %c
-    double %lf
-    */
-   /* Variables
-   \n - newline 
-   */
- // declaration
-  //int age1 = 23; // initialising a variable 
-  //printf("%d\n", age1);
-  //printf("Happy belated birthday sweetheart");
-  //printf("Enter age");
-  //scanf("%i", &age);
-  //printf("%d",age);
 
-  char name[10];
-  int age;
+  //Build a program that asks user his/her name and the age, the prints out to him a customised message.
+  #include<stdio.h>
+   int age;
+   char name[10];
+   int main(){
+    printf("How old are you\n", age);
+    scanf("%d\n",&age);
+    printf("What is your name\n",name);
+    scanf("%d\n",&name);
+    return 0;
 
-  printf("Enter name:");
-  scanf("%s", &name);
-  printf("Enter age:");
-  scanf("%i", &age);
+   }
 
-  printf(" %s you %i years old", name, age);
   
   
   
-}
+
