@@ -11,8 +11,8 @@ calculateTotal() passes in the order array to calculate the subtotal, tax, grand
 placeOrder() accepts multiple items, when the user is placing orders.
 ViewOrder() prints or displays itemised reciept with the orders made.
 
-struct foods - defines the structure or template of the food menu.
-struct Order - defines the structure or template of the order. 
+struct foods - defines the structure or template of the food array.
+struct Order - defines the structure or template of the order array. 
 struct foods food[] - array that stores the menu items. 
 struct order orders[] - array to store the placed orders.
  */
