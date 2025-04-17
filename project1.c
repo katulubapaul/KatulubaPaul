@@ -5,12 +5,22 @@
  - View the receipt after placing order.
  - Calculate the grand total, sub total, tax.
  - Decide how many items to order (Maximum is 3).
-*/
+
+ShowMenu() is to display itemised menu to the customers.
+calculateTotal() passes in the order array to calculate the subtotal, tax, grand_total. 
+placeOrder() accepts multiple items, when the user is placing orders.
+ViewOrder() prints or displays itemised reciept with the orders made.
+
+struct foods - defines the structure or template of the food menu.
+struct Order - defines the structure or template of the order. 
+struct foods food[] - array that stores the menu items. 
+struct order orders[] - array to store the placed orders.
+ */
 
 #include <stdio.h>// preprocessor directive
 #include <stdlib.h>
 
-//variable to stores user name
+//variable to store user name
 char name[25];
 
 // function declaration
@@ -29,7 +39,7 @@ int calculateTotal();
 //This is the structure of the order.
 struct Order{
     int code;
-    double quantity;
+    int quantity;
 };
 
 //struct array of items on the menu
@@ -90,7 +100,7 @@ int PlaceOrder(){
     
     //Prompt user to take the quantity of the item.
     printf("Quantity:\n");
-    scanf("%lf", &orders[i].quantity);
+    scanf("%d", &orders[i].quantity);
     }
 
     ViewOrder();
@@ -114,7 +124,7 @@ int ViewOrder(){
         /*Since the product codes starts from 001, this 
         item_index variable make there indexing easy.*/
         int item_index = orders[i].code - 1;
-        printf("%.1lf %s  @  $%.2lf \n", orders[i].quantity, food[item_index].name, food[item_index].price*orders[i].quantity);
+        printf("%d %s  @  $%.2lf \n", orders[i].quantity, food[item_index].name, food[item_index].price*orders[i].quantity);
 
         }
         printf("\n");
@@ -154,7 +164,7 @@ int main(){ //Main function
     fgets(name, 25, stdin);
 
     // Welcome message to a user
-    printf(" %s! Welcome to KICKNACKS\n ", name);
+    printf("%s! Welcome to KICKNACKS\n ", name);
 
     //list of choices for the user to continue.
     printf("Enter a number to make choice and continue: \n");
